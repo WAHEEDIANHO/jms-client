@@ -5,10 +5,13 @@ import Home from "./views/Home";
 import CreateJob from "./views/CreateJob";
 import JobApplication from "./views/JobApplication";
 import StaffReport from "./views/StaffReport";
-import Staff from "./views/Staff";
 import UserProfile from "./views/UserProfile";
 import Footer from "./components/Footer";
 import About from "./views/About";
+import AddUser from "./views/AddUser";
+import JobApplicationReport from "./views/JobApplicationReport";
+import JobReport from "./views/JobReport";
+import Application from "./views/Application";
 
 function Layout({ api, email }) {
   const { pathname } = useLocation();
@@ -26,22 +29,35 @@ function Layout({ api, email }) {
         page = <JobApplication title={"User"} api={api} />;
         break;
 
+      case `/job/${id}`:
+        page = <CreateJob api={api} />;
+        break;
+
+
       case "/add-job":
         page = <CreateJob api={api} />;
         break;
 
-      case "/dashboard/add-staff":
-        page = <JobApplication title={"Staff"} api={api} />;
-        break;
-      case "/dashboard/staff":
-        page = <Staff api={api} />;
-        break;
-      case `/dashboard/user/${id}`:
-        page = <UserProfile api={api} id={id} />;
+      case "/signup":
+        page = <AddUser title={"Staff"} api={api} />;
         break;
 
-      case "/dashboard/staff_report":
+      case "/staff_report":
         page = <StaffReport api={api} />;
+        break;
+
+      case "/jobs_report":
+        page = <JobReport api={api} />;
+        break;
+
+
+      case `/job/${id}/applications`:
+        page = <JobApplicationReport api={api} />;
+        break;
+
+
+      case `/user/${id}`:
+        page = <UserProfile api={api} id={id} />;
         break;
 
 

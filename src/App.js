@@ -19,7 +19,7 @@ class App extends Component {
       user: null,
       token: sessionStorage.getItem("jms_token"),
       api: "https://jms-5haa.onrender.com/api", //"http://localhost:7700/api/v1";
-      // api: " http://localhost:3030/api", //"http://localhost:7700/api/v1";
+      // api: "http://localhost:3030/api", //"http://localhost:7700/api/v1";
     };
   }
 
@@ -64,49 +64,30 @@ class App extends Component {
       <Router>
         {/*<Preloader />*/}
         <Routes>
-          <Route path="/dashboard/add-user" element={<Layout api={api} />} />
           <Route path="/login" element={<Login api={api}  />} />
           <Route path="/add-job" element={<Layout api={api}   />} />
           <Route path="/job/apply/:id" element={<Layout api={api}   />} />
-          <Route
-            path="/logout"
-            element={<Login setUser={this.setCurrentUser} api={api} />}
-          />
+          <Route path="/signup" element={<Layout api={api}   />} />
+          <Route path="/logout" element={<Login setUser={this.setCurrentUser} api={api} />} />
+          <Route path="/about" element={<Layout  api={api} />} />
+
           <Route element={<ProtectedRoute />}>
-            <Route
-                path="/"
-                element={<Layout user={"waheed"} token={token} api={api} />}
-            />
-            <Route
-              path="/dashboard"
-              element={<Layout user={"waheed"} token={token} api={api} />}
-            />{" "}
-            {/*Home setUser= {setCurrentUser}*/}
-            {/*<Route path="/dashboard/add-user" element={<Layout api={api} />} />*/}
-            <Route
-              path="/dashboard/add_criminal"
-              element={<Layout api={api} />}
-            />
-            <Route path="/dashboard/criminal" element={<Layout api={api} />} />
-            <Route
-              path="/dashboard/criminal/:id" element={<Layout api={api} />}
-            />
-            <Route
-              path="/dashboard/criminals_report"
-              element={<Layout api={api} />}
-            />
-            <Route path="/dashboard/add-staff" element={<Layout api={api} />} />
-            <Route path="/dashboard/staff" element={<Layout api={api} />} />
-            <Route path="/dashboard/user/:id" element={<Layout api={api} />} />
-            <Route
-              path="/dashboard/staff_report"
-              element={<Layout api={api} />}
-            />
-            <Route path="/about" element={<Layout />} />
-            <Route
-              path="/dashboard/change_password"
-              element={<Layout api={api} email={user?.email} />}
-            />
+            <Route path="/" element={<Layout user={"waheed"} token={token} api={api} />} />
+
+              <Route path="/add-job" element={<Layout api={api} />}  />
+              <Route path="/job/apply/:id" element={<Layout api={api} />}  />
+              <Route path="/job/:id" element={<Layout api={api} />}  />
+            <Route path="/jobs_report" element={<Layout api={api} />} />
+
+            <Route path="/job/:id/applications" element={<Layout api={api} />} />
+
+              <Route path="/user/:id" element={<Layout api={api} />} />
+              <Route path="/staff_report" element={<Layout api={api} />} />
+
+
+              {/*<Route path="/application_report" element={<Layout api={api} />} />*/}
+
+              {/*<Route path="/about" element={<Layout />} />*/}
           </Route>
           <Route path="*" element={<Layout />} />
         </Routes>

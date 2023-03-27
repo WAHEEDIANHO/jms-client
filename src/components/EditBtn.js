@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function EditBtn({ pre, id }) {
   return (
     <Link
-      to={`/dashboard/${pre}/${id}`}
+      to={`/${pre}/${id}`}
       className="btn btn-sm btn-success mx-2"
       data-id={id}
     >

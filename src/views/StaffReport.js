@@ -37,11 +37,12 @@ class StaffReport extends React.Component {
   getUser = async () => {
     const config = {
       headers: {
-        authorization: `bearer ${sessionStorage.getItem("cms_token")}`,
+        authorization: `bearer ${sessionStorage.getItem("jms_token")}`,
       },
     };
     // "https://crms-api.herokuapp.com/api/v1/criminal",
     const res = await axios.get(`${this.props.api}/user`, config);
+    console.log(res.data)
     return res.data;
   };
 
@@ -71,9 +72,9 @@ class StaffReport extends React.Component {
 
   filterList(search) {
     let result = this.state.users.filter(
-      ({ sname, othername }) =>
-        sname.toLowerCase().includes(search.toLowerCase()) ||
-        othername.toLowerCase().includes(search.toLowerCase())
+      ({ firstname, lastname }) =>
+        firstname?.toLowerCase().includes(search.toLowerCase()) ||
+        lastname?.toLowerCase().includes(search.toLowerCase())
     );
     return result;
   }

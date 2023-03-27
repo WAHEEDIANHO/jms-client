@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import {useNavigate, useLocation, Link} from "react-router-dom";
 import axios from "axios";
 
 import "../css/login.css";
@@ -38,6 +38,7 @@ function Login({ api, setUser }) {
       res = await res.data;
       sessionStorage.setItem("jms_token", res.token);
       sessionStorage.setItem("jms_id", res._id);
+      sessionStorage.setItem("role", res.role);
       setUser(true, res._id);
     } catch (err) {
       setLogin({ username: "", password: "" });
@@ -103,7 +104,7 @@ function Login({ api, setUser }) {
                     {/*<button type="button" className="btn btn-primary btn-lg"*/}
                     {/*        style={{paddingLeft: "2.5rem", paddingRight: "2.5rem"}}>Login*/}
                     {/*</button>*/}
-                    <p className="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!" className="link-danger">Register</a></p>
+                    <p className="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <Link to="/signup" className="link-danger">Register</Link></p>
                   </div>
 
                 </form>

@@ -6,22 +6,35 @@ import Loader from "../components/Loader";
 import Swal from "sweetalert2";
 
 import Guide from "../components/Guide";
+import {useNavigate, useParams} from "react-router-dom";
 
 function CreateJob({ api }) {
   const [job, setJob] = useState({});
   const [loader, setLoader] = useState(false);
   const [job_id, setJobID] = useState();
+  const { id } = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(`${api}/job`, {
+      const config = {
         headers: {
           authorization: `bearer ${sessionStorage.getItem("jms_token")}`,
         },
-      });
-      console.log("gotten data", data)
-      setJobID(`JMS${(data.length + 1).toString().padStart(3, 0)}`);
-      // return data.length;
+      }
+
+      if (!id) {
+        const { data } = await axios.get(`${api}/job`, config);
+        console.log("gotten data", data)
+        setJobID(`JMS${(data.length + 1).toString().padStart(3, 0)}`);
+        // return data.length;
+      }else {
+        const {data} = await axios.get(`${api}/job/${id}`, config);
+        setJob(data)
+        setJobID()
+        console.log(data)
+      }
+
     })();
   }, []);
 
@@ -77,6 +90,59 @@ function CreateJob({ api }) {
         setLoader(false);
       });
   };
+  const updateJob = (e) => {
+    e.preventDefault();
+    setLoader(true);
+
+    const data = job;
+    // data.job_id = job_id
+    console.log(data)
+
+
+    axios
+      .put(`${api}/job/${id}`, data, {
+        headers: {
+          authorization: `bearer ${sessionStorage.getItem("jms_token")}`,
+        },
+      })
+      .then((res) => {
+        // setJob({
+        //   title: "",
+        //   company: "",
+        //   location: "",
+        //   email: "",
+        //   qualification: "",
+        //   hireDuration: "",
+        //   noOfEmployee: "",
+        //   salary: "",
+        //   deadline: "",
+        //   jobType: "",
+        //   desc: ""
+        // });
+        setLoader(false);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Job updated successfully',
+          showConfirmButton: false,
+          timer: 3000
+        })
+        navigate("/jobs_report")
+        // alert("New Criminal added successfully");
+      })
+      .catch((err) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: "Ooops!",
+          text: 'error while submitting form \n please try again',
+          showConfirmButton: false,
+          timer: 3000
+        })
+        // alert("oops! error while submitting form \n please try again");
+        setLoader(false);
+      });
+  };
 
   const handleChange = (e) => {
     setJob({
@@ -98,21 +164,21 @@ function CreateJob({ api }) {
         </Guide>
         {/* onSubmit={submit} */}
         <div className="container">
-          <form className="row g-3" onSubmit={addJob}>
-            <div className="row justify-content-end mb-5">
+          <form className="row g-3" onSubmit={!id ? addJob: updateJob}>
+            { !id && <div className="row justify-content-end mb-5">
               <div className="col-md-6">
                 <label htmlFor="name" className="form-label">
                   Job ID
                 </label>
                 <input
-                  disabled
-                  type="text"
-                  name="text"
-                  className="form-control my-auto my-auto border-0 border-bottom rounded-0"
-                  value={job_id ? job_id : ""}
+                    disabled
+                    type="text"
+                    name="text"
+                    className="form-control my-auto my-auto border-0 border-bottom rounded-0"
+                    value={job_id ? job_id : ""}
                 />
               </div>
-            </div>
+            </div>}
 
             <div className="col-md-6">
               <label htmlFor="title" className="form-label">
@@ -269,9 +335,20 @@ function CreateJob({ api }) {
 
 
             <div className="col-12">
-              <button type="submit" className="btn btn-lg btn-success w-100 mt-3">
-                Register Job
-              </button>
+              {
+                !id ?
+                    <button type="submit" className="btn btn-lg btn-success w-100 mt-3">
+                      Register Job
+                    </button> :
+                    <button type="submit" className="btn btn-lg btn-success w-100 mt-3">
+                      Update Job
+                    </button>
+
+              }
+
+
+
+
             </div>
           </form>
         </div>

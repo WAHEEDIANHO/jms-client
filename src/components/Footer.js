@@ -24,9 +24,9 @@ function Footer() {
         className="text-center py-3"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
       >
-        2022 Criminal Management Sysytem <br />
-        HC20200206048 <br />
-        Supervised By <strong>MR.CHRIS</strong>
+          {(new Date).getFullYear()} Job Management System <br />
+        HC20200206079 <br />
+        Supervised By <strong>MR.NWAEKPE O.C</strong>
       </div>
       {/* <!-- Copyright --> */}
     </footer>

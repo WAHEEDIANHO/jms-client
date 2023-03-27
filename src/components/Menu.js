@@ -8,7 +8,15 @@ function Menu() {
 
   const menu = [
     { title: "Find jobs", path: "/" },
-    { title: "Post Job", path: "/add-job" },
+    { title: "About", path: "/about" },
+      sessionStorage.getItem("role") !== "user" && { title: "Post Job", path: "/add-job" },
+      sessionStorage.getItem("isAdmin") && {
+          title: "Report",
+          role: [
+              { title: "User", path: "/staff_report" },
+              { title: "Job", path: "/jobs_report" },
+          ],
+      },
     {
       title: sessionStorage.getItem("jms_token") ? "Sign out" : "Sign in",
       path: sessionStorage.getItem("jms_token") ? "/logout" : "/",
@@ -17,7 +25,7 @@ function Menu() {
 
   const getDisplayMenu = (menuType) => {
     return menuType.map((el, i) => {
-      if (el.role) {
+      if (el !== null && el.role) {
         return (
           <li className="nav-item dropdown" key={i}>
             <Link
@@ -30,7 +38,7 @@ function Menu() {
             >
               {el.title}
             </Link>
-            <ul className="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
               {el.role.map((el, i) => (
                 <li className="dropdown-item" key={i}>
                   <Link className="nav-link" to={el.path}>
@@ -38,7 +46,7 @@ function Menu() {
                   </Link>
                   {el.isInnerRole ? (
                     <ul
-                      className="dropdown-menu dropdown-submenu bg-dark"
+                      className="dropdown-menu dropdown-submenu"
                       aria-labelledby="navbarDropdown"
                     >
                       {el.inner_role.map((el, i) => (
@@ -58,8 +66,8 @@ function Menu() {
       } else {
         return (
           <li className="nav-item" key={i}>
-            <Link to={el.path} className="nav-link active" aria-current="page">
-              {el.title}
+            <Link to={el?.path} className="nav-link active" aria-current="page">
+              {el?.title}
             </Link>
           </li>
         );
