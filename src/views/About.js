@@ -12,10 +12,6 @@ function About() {
                 Design and implementation of a Web based Job Management
                 System Using ReactJS, NodeJs & MongoDB
               </p>
-              {/*<div className="img__holder">*/}
-              {/*  <img src="/img/gbadegesin.jpeg" alt="owner" />*/}
-              {/*</div>*/}
-
               <div className="bio">
                 <p className="text-dark fw-bold">Ariwodola Emmanuel Segun</p>
                 <p className="text-dark fw-bold">HC20200206079</p>
