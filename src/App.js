@@ -49,9 +49,7 @@ class App extends Component {
       })
       .then((res) => res.data)
       .then((data) => {
-        console.log(data)
         this.setState({ user: data });
-        console.log(data.admin);
         sessionStorage.setItem("isAdmin", data.admin);
       }).catch((e) => {
         console.log(e.message, "is here")
@@ -63,7 +61,8 @@ class App extends Component {
       <Router>
         {/*<Preloader />*/}
         <Routes>
-          <Route path="/login" element={<Login api={api}  />} />
+          <Route path="/login" element={<Login setUser={this.setCurrentUser} api={api} />} />
+          {/*<Route path="/login" element={<Login api={api}  />} />*/}
           <Route path="/add-job" element={<Layout api={api}   />} />
           <Route path="/job/apply/:id" element={<Layout api={api}   />} />
           <Route path="/signup" element={<Layout api={api}   />} />

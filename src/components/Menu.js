@@ -9,8 +9,8 @@ function Menu() {
   const menu = [
     { title: "Find jobs", path: "/" },
     { title: "About", path: "/about" },
-      sessionStorage.getItem("role") === "employee" || sessionStorage.getItem("isAdmin") && { title: "Post Job", path: "/add-job" },
-      sessionStorage.getItem("isAdmin") && {
+      (sessionStorage.getItem("role") === "employee" || sessionStorage.getItem("isAdmin")) && { title: "Post Job", path: "/add-job" },
+      sessionStorage.getItem("isAdmin") === "true" && {
           title: "Report",
           role: [
               { title: "User", path: "/staff_report" },
@@ -21,11 +21,13 @@ function Menu() {
       title: sessionStorage.getItem("jms_token") ? "Sign out" : "Sign in",
       path: sessionStorage.getItem("jms_token") ? "/logout" : "/",
     },
-  ];
+  ].filter(el => el !== false);
+
+  console.log(menu)
 
   const getDisplayMenu = (menuType) => {
     return menuType.map((el, i) => {
-      if (el !== null && el.role) {
+      if (el !== false && el?.role) {
         return (
           <li className="nav-item dropdown" key={i}>
             <Link

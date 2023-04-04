@@ -37,10 +37,10 @@ function Login({ api, setUser }) {
       let res = await axios.post(`${api}/user/login`, login);
       res = await res.data;
       console.log(res)
+      setUser(true, res._id);
       sessionStorage.setItem("jms_token", res.token);
       sessionStorage.setItem("jms_id", res._id);
       sessionStorage.setItem("role", res.role);
-      setUser(true, res._id);
     } catch (err) {
       setLogin({ username: "", password: "" });
       setIsError(true);
