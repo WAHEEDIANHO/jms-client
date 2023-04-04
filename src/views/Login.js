@@ -36,6 +36,7 @@ function Login({ api, setUser }) {
     try {
       let res = await axios.post(`${api}/user/login`, login);
       res = await res.data;
+      console.log(res)
       sessionStorage.setItem("jms_token", res.token);
       sessionStorage.setItem("jms_id", res._id);
       sessionStorage.setItem("role", res.role);

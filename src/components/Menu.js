@@ -9,7 +9,7 @@ function Menu() {
   const menu = [
     { title: "Find jobs", path: "/" },
     { title: "About", path: "/about" },
-      sessionStorage.getItem("role") !== "user" && { title: "Post Job", path: "/add-job" },
+      sessionStorage.getItem("role") === "employee" || sessionStorage.getItem("isAdmin") && { title: "Post Job", path: "/add-job" },
       sessionStorage.getItem("isAdmin") && {
           title: "Report",
           role: [
